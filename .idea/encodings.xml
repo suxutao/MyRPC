@@ -7,6 +7,8 @@
     <file url="file://$PROJECT_DIR$/example-consumer/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/example-provider/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/example-provider/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/my-rpc-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/my-rpc-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/my-rpc-easy/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/my-rpc-easy/src/main/resources" charset="UTF-8" />
   </component>

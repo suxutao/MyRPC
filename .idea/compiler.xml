@@ -12,6 +12,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="my-rpc-easy" />
         <module name="example-provider" />
+        <module name="my-rpc-core" />
         <module name="example-common" />
         <module name="example-consumer" />
       </profile>
