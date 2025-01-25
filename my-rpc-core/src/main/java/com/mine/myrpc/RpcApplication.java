@@ -26,7 +26,9 @@ public class RpcApplication {
         init(newRpcConfig);
     }
 
-    //获取配置
+    /**
+     * 获取配置，单例模式（双重校验锁）
+     */
     public static RpcConfig getRpcConfig() {
         if (rpcConfig == null) {
             synchronized (RpcApplication.class) {

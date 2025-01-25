@@ -12,5 +12,7 @@ public class RpcConfig {
     //服务器主机名
     private String serverHost = "localhost";
     //服务器端口号
-    private Integer serverPort = 8083;
+    private Integer serverPort = 8080;
+    //mock服务
+    private boolean mock = false;
 }
