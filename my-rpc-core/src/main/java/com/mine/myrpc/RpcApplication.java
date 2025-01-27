@@ -1,7 +1,10 @@
 package com.mine.myrpc;
 
+import com.mine.myrpc.config.RegistryConfig;
 import com.mine.myrpc.config.RpcConfig;
 import com.mine.myrpc.constant.RpcConstant;
+import com.mine.myrpc.registry.EtcdRegistry;
+import com.mine.myrpc.registry.Registry;
 import com.mine.myrpc.utils.ConfigUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,6 +16,11 @@ public class RpcApplication {
     public static void init(RpcConfig newRpcConfig) {
         rpcConfig = newRpcConfig;
         log.info("rpc init, config = {}", newRpcConfig.toString());
+        //注册中心初始化
+        RegistryConfig registryConfig=rpcConfig.getRegistryConfig();
+        Registry registry=new EtcdRegistry();
+        registry.init(registryConfig);
+        log.info("registry init, config = {}",registryConfig);
     }
 
     //框架初始化

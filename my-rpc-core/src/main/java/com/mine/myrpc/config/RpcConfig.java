@@ -15,4 +15,6 @@ public class RpcConfig {
     private Integer serverPort = 8080;
     //mock服务
     private boolean mock = false;
+    //注册中心配置
+    private RegistryConfig registryConfig = new RegistryConfig();
 }
