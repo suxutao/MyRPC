@@ -21,6 +21,8 @@ public class RpcApplication {
         Registry registry=new EtcdRegistry();
         registry.init(registryConfig);
         log.info("registry init, config = {}",registryConfig);
+        //创建并注册Shutdown Hook，JVM退出时执行操作
+        Runtime.getRuntime().addShutdownHook(new Thread(registry::destroy));
     }
 
     //框架初始化

@@ -27,5 +27,17 @@ public class EasyConsumerExample {
         }
         long number = userService.getNumber();
         System.out.println(number);
+
+        User user2 = new User();
+        user.setName("asu2");
+        // 调用
+        User newUser2 = userService.getUser(user);
+        if (newUser2 != null) {
+            System.out.println(newUser2.getName());
+        } else {
+            System.out.println("user == null");
+        }
+        long number2 = userService.getNumber();
+        System.out.println(number2);
     }
 }
