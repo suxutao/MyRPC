@@ -29,15 +29,13 @@ public class EasyConsumerExample {
         System.out.println(number);
 
         User user2 = new User();
-        user.setName("asu2");
+        user2.setName("asu2");
         // 调用
-        User newUser2 = userService.getUser(user);
+        User newUser2 = userService.getUser(user2);
         if (newUser2 != null) {
             System.out.println(newUser2.getName());
         } else {
-            System.out.println("user == null");
+            System.out.println("user2 == null");
         }
-        long number2 = userService.getNumber();
-        System.out.println(number2);
     }
 }
