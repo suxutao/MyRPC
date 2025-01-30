@@ -1,5 +1,6 @@
 package com.mine.myrpc.config;
 
+import com.mine.myrpc.loadbalancer.LoadBalancerKeys;
 import lombok.Data;
 
 //RPC框架配置类
@@ -17,4 +18,6 @@ public class RpcConfig {
     private boolean mock = false;
     //注册中心配置
     private RegistryConfig registryConfig = new RegistryConfig();
+    //负载均衡器
+    private String loadBalancer= LoadBalancerKeys.CONSISTENT_HASH;
 }

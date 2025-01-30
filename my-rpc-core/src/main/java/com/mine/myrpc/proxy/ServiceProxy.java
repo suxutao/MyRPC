@@ -4,6 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.mine.myrpc.RpcApplication;
 import com.mine.myrpc.config.RpcConfig;
 import com.mine.myrpc.constant.RpcConstant;
+import com.mine.myrpc.loadbalancer.ConsistentHashLoadBalancer;
+import com.mine.myrpc.loadbalancer.LoadBalancer;
 import com.mine.myrpc.model.RpcRequest;
 import com.mine.myrpc.model.RpcResponse;
 import com.mine.myrpc.model.ServiceMetaInfo;
@@ -16,7 +18,9 @@ import com.mine.myrpc.server.tcp.VertxTcpClient;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServiceProxy implements InvocationHandler {
 
@@ -47,7 +51,11 @@ public class ServiceProxy implements InvocationHandler {
             if (CollUtil.isEmpty(serviceMetaInfoList)) {
                 throw new RuntimeException("暂无服务地址");
             }
-            ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfoList.get(0);
+            //负载均衡
+            LoadBalancer loadBalancer=new ConsistentHashLoadBalancer();
+            Map<String,Object>requestParams=new HashMap<>();
+            requestParams.put("methodName",rpcRequest.getMethodName());
+            ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams,serviceMetaInfoList);
 
             //发送TCP请求
             RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest,selectedServiceMetaInfo);
