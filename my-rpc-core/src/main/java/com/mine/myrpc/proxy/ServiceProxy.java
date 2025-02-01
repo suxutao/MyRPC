@@ -6,6 +6,8 @@ import com.mine.myrpc.config.RpcConfig;
 import com.mine.myrpc.constant.RpcConstant;
 import com.mine.myrpc.fault.retry.FixedIntervalRetryStrategy;
 import com.mine.myrpc.fault.retry.RetryStrategy;
+import com.mine.myrpc.fault.tolerant.FailSafeTolerantStrategy;
+import com.mine.myrpc.fault.tolerant.TolerantStrategy;
 import com.mine.myrpc.loadbalancer.ConsistentHashLoadBalancer;
 import com.mine.myrpc.loadbalancer.LoadBalancer;
 import com.mine.myrpc.model.RpcRequest;
@@ -60,8 +62,14 @@ public class ServiceProxy implements InvocationHandler {
             ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams,serviceMetaInfoList);
 
             //发送TCP请求 & 重试机制
-            RetryStrategy retryStrategy=new FixedIntervalRetryStrategy();
-            RpcResponse rpcResponse = retryStrategy.doRetry(()->VertxTcpClient.doRequest(rpcRequest,selectedServiceMetaInfo));
+            RpcResponse rpcResponse;
+            try {
+                RetryStrategy retryStrategy=new FixedIntervalRetryStrategy();
+                rpcResponse = retryStrategy.doRetry(()->VertxTcpClient.doRequest(rpcRequest,selectedServiceMetaInfo));
+            } catch (Exception e) {
+                TolerantStrategy tolerantStrategy=new FailSafeTolerantStrategy();
+                rpcResponse=tolerantStrategy.doTolerant(null,e);
+            }
             return rpcResponse.getData();
         } catch (IOException e) {
             e.printStackTrace();
